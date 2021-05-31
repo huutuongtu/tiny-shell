@@ -6,10 +6,28 @@
 std::string command_buf;
 STARTUPINFO si[100];
 PROCESS_INFORMATION  pi[100];
-int n, background_mode = 1;
+int n;
 void menu() {
-    std::cout << "                                                    MY-SHELL" << std::endl;
-    std::cout << "___________________________________________________________________________________________________________________\n" << std::endl;
+    std::cout << "             =  =                   ========================            ======================                   " << std::endl;
+    std::cout << "             =      =                          =                                  = " << std::endl;
+    std::cout << "             =            =                    =                                  = " << std::endl;
+    std::cout << "             =               =                 =                                  =   " << std::endl;
+    std::cout << "             =                 =               =                                  =   " << std::endl;
+    std::cout << "             =                 =               =                                  =  " << std::endl;
+    std::cout << "             =                =                =                                  =   " << std::endl;
+    std::cout << "             =              =                  =                                  =  " << std::endl;
+    std::cout << "             =           =                     =                                  =   " << std::endl;
+    std::cout << "             =         =                       =                                  =    " << std::endl;
+    std::cout << "             =     =                           =                                  = " << std::endl;
+    std::cout << "             =  =                              =                                  =" << std::endl;
+    std::cout << "             =                                 =                                  =" << std::endl;
+    std::cout << "             =                                 =                                  =" << std::endl;
+    std::cout << "             =                                 =                                  = " << std::endl;
+    std::cout << "             =                                 =                                  = " << std::endl;
+    std::cout << "             =                                 =                                  =    " << std::endl;
+    std::cout << "             =                                 =                                  = " << std::endl;
+    std::cout << "             =                                 =                                  =" << std::endl;
+    std::cout << "                             \n \n \n                                         Welcome to our Shell!!!                    \n" << std::endl;
     std::cout << "help: Show menu" << std::endl;
 }
     void kill_all() {
@@ -18,7 +36,7 @@ void menu() {
             CloseHandle(pi[i].hProcess);
             CloseHandle(pi[i].hThread);
         }
-        std::cout << "All processes killed..." << std::endl;
+        std::cout << "All processes are killed" << std::endl;
         n = 0;
     }
         void kill_id(int id) {
@@ -65,9 +83,6 @@ void menu() {
             pwcsName = new WCHAR[999];
             MultiByteToWideChar(CP_ACP, 0, p, -1, (LPWSTR)pwcsName, size);
             CreateProcess(pwcsName, NULL, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si[n], &pi[n]);
-            if (background_mode == 1) {
-                return;
-            }
             WaitForSingleObject(pi[n].hProcess, 10000);
         }
 
@@ -85,16 +100,13 @@ void menu() {
             pwcsName = new WCHAR[999];
             MultiByteToWideChar(CP_ACP, 0, k, -1, (LPWSTR)pwcsName, size);
             CreateProcess(pwcsName, NULL, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si[n], &pi[n]);
-            if (background_mode == 1) {
-                return;
-            }
             WaitForSingleObject(pi[n].hProcess, 10000);
         }
         void list() {
             for (int i = 1; i <= n; i++) {
                 std::cout << pi[i].dwProcessId << " "
-                    << pi[i].hProcess << " "
-                    << si[i].wShowWindow << std::endl;
+                    << pi[i].hProcess << " ";
+                    
             }
         }
 
@@ -162,7 +174,7 @@ void menu() {
                 }
                 else if (!command_buf.compare("exit") || !command_buf.compare("e")) {
                     exit();
-                    return 0;
+                    return 1;
                 }
                 else if (!command_buf.compare("date")) {
                     system("date");
@@ -173,17 +185,9 @@ void menu() {
                 else if (!command_buf.compare("ipconfig")) {
                     system("ipconfig");
                 }
-                else if (!command_buf.compare("background")) {
-                    std::cin >> command_buf;
-                    if (!command_buf.compare("on")) {
-                        background_mode = 1;
-                    }
-                    if (!command_buf.compare("off")) {
-                        background_mode = 0;
-                    }
-                }
                 else if (!command_buf.compare("clear")) {
                     system("cls");
+                    std::cout << "Screen is cleared!!! " << std::endl;
                 }
 
                 else {
@@ -191,3 +195,6 @@ void menu() {
                 }
             }
         }
+        //open file .bat
+        //testbat.bat
+        //shutdown -a
